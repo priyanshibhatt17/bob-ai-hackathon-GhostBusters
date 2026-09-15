@@ -1,48 +1,55 @@
-# Setup Guide
+# Setup & Run Guide
 
-This guide will walk you through setting up both the Frontend Dashboard and the Backend MCP Server for GhostBusters.
+Follow these simple steps to run the GhostBusters platform locally and test the IBM Bob integration.
 
 ## Prerequisites
-*   **Node.js**: v20 or higher (v24 recommended).
-*   **npm**: v10 or higher.
-*   **IBM Bob**: Installed in your IDE (VS Code).
+- Node.js (v18+)
+- npm
+- IBM Bob IDE (or VS Code with the IBM Bob extension installed)
 
-## Environment Variables
-This project requires no complex API keys, as it leverages your local IBM Bob IDE credentials. However, an `.env.example` file is provided in `src/.env.example`.
-
-```env
-# src/.env.example
-PORT=5173
-VITE_API_URL=http://localhost:3000
-```
-
-## Installation & Running
-
-### 1. The Frontend Dashboard
-Run these commands to start the visual dashboard:
+## 1. Start the Backend Engine
+The backend engine powers the AST (Abstract Syntax Tree) scanner. 
 
 ```bash
-cd src/frontend
+# Navigate to the backend directory
+cd src/backend
+
+# Install dependencies (including typescript and express)
 npm install
+
+# Start the Node.js API server
+npm start
+```
+*The server will start on `http://localhost:3000`.*
+
+## 2. Start the Frontend Dashboard
+The frontend is a Vite-powered React application.
+
+```bash
+# Open a new terminal and navigate to the frontend directory
+cd src/frontend
+
+# Install dependencies
+npm install
+
+# Start the Vite development server
 npm run dev
 ```
-*   **Verification:** Open your browser and navigate to `http://localhost:5173`. You should see the GhostBusters UI.
+*The UI will be accessible at `http://localhost:5173`.*
 
-### 2. The Backend MCP Server
-Run these commands to compile and start the Ghost Scanner:
+## 3. How to Test the Project
+We have included a mock repository specifically designed to test the AST scanners.
 
-```bash
-cd src/backend
-npm install
-npm run build
-npm run start
-```
-*   **Verification:** The console should output `GhostBusters MCP Server running on stdio`.
+1. Open `http://localhost:5173` in your browser.
+2. In the target path input box, enter the absolute path to the dummy project:
+   `<YOUR_ABSOLUTE_PATH>/dummy-project` (e.g. `D:\IBM BOB\dummy-project`).
+3. Click **Lookup**.
+4. Review the Codebase Health Dashboard and click "View Blast Radius Map" to see the visual dependencies.
 
-## Troubleshooting Common Errors
-
-| Error Message | Cause | Solution |
-|---|---|---|
-| `memory allocation of X bytes failed` | Vite/Rust backend ran out of memory. | Restart your terminal and run `npm run dev` again. |
-| `Cannot find module 'typescript'` | Dependencies were not fully installed. | Run `npm install` inside the `src/backend` folder again. |
-| `Address already in use` | Port 5173 or 3000 is occupied. | Kill the process using the port, or change the port in `vite.config.ts`. |
+## 4. Testing the IBM Bob Integration
+1. Click the green **"Auto-Fix via Bob"** button on one of the errors (this copies an orchestrated prompt to your clipboard).
+2. Open the **IBM Bob IDE** and open the `dummy-project` folder.
+3. If prompted, click **"Trust this folder"** in the blue banner at the top of the IDE to enable Bob's agentic features.
+4. Open the IBM Bob Chat panel.
+5. Paste the prompt and press Enter. 
+6. Watch as IBM Bob safely removes the ghost dependencies and dead code from your filesystem!

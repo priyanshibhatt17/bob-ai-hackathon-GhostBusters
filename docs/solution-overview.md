@@ -1,19 +1,25 @@
 # Solution Overview
 
-## The Core Mechanism
-**GhostBusters** is a hybrid solution comprising two main components:
-1. **The Ghost Scanner (Local Backend):** A Node.js backend that utilizes the TypeScript Compiler API to perform zero-cost AST (Abstract Syntax Tree) parsing across an entire repository. It statically identifies variables, functions, and imports that are declared but never used.
-2. **The MCP Server & IBM Bob Integration:** The backend acts as a Model Context Protocol (MCP) server. Instead of feeding thousands of lines of raw code into an LLM (which is expensive and slow), our local scanner finds the "ghosts" first, and then sends a highly optimized, targeted prompt to **IBM Bob** to verify the dead code and propose a safe, multi-file refactor.
+**GhostBusters** is an enterprise-grade technical debt orchestrator that identifies, scores, and liquidates AI-generated code bloat. 
 
-## Differentiation from Naive Alternatives
-Naive alternatives either rely on basic regex (which breaks easily) or they attempt to paste entire codebases into an LLM context window, resulting in massive API costs and hallucinations. GhostBusters uses deterministic static analysis *first*, and AI *second* for validation, making it extremely fast, accurate, and token-efficient.
+We solve the problem of "invisible technical debt" by separating the analysis phase from the execution phase. IBM Bob is an incredibly powerful AI agent, but it lacks the ability to instantaneously scan a 10,000-file repository to find hidden debt on its own. **GhostBusters acts as the MRI Machine, while IBM Bob acts as the Surgeon.**
 
-## Key Design Decisions
-*   **Token-Efficient Strategy (50 Credit Budget):** We specifically designed the architecture to conserve IBM Bob tokens. By doing the heavy lifting locally via the TS Compiler API, Bob is only invoked for the final, critical "Agent Execution" step.
-*   **Visual Dashboard:** We built a React/Vite frontend with a clean, minimalistic UI to provide engineers with a clear visual representation of their technical debt before they unleash the AI to clean it up.
+## How It Works
 
-## The User Experience
-1. A developer enters the path of their repository into the GhostBusters Web Dashboard.
-2. The dashboard displays a clean list of all Ghost Dependencies and orphaned code blocks.
-3. The developer switches to their IDE, where they ask IBM Bob to run the GhostBusters MCP tool.
-4. Bob automatically generates the PR/diffs to safely liquidate the dead code with a single click.
+1. **The AST Scanning Engine:**
+   GhostBusters runs a lightning-fast, local Node.js backend powered by the TypeScript Compiler API. It traverses the Abstract Syntax Tree (AST) of the target repository to map every dependency, function, and configuration key.
+
+2. **The Intelligence Layer:**
+   - **Ghost Package Detection:** Cross-references `package.json` against the global AST to mathematically prove which libraries have zero execution paths.
+   - **Dead Config Detection:** Scans `config.json` and traces keys across the entire directory structure.
+   - **Duplicate Logic Hashing:** Physically strips whitespace and hashes the internal structure of functions to detect cloned code blocks, even if they have different names.
+
+3. **The Confidence & Risk Engine:**
+   Automatic code deletion is dangerous. GhostBusters assigns a mathematical Confidence Score and Risk Category to every finding:
+   - *Ghost Packages:* **99% Confidence, Low Risk.** (Safe for Auto-Fix).
+   - *Duplicate Logic:* **85% Confidence, High Risk.** (Requires human review or subagent investigation).
+
+4. **IBM Bob Orchestration:**
+   GhostBusters features a stunning, macOS-inspired Interactive Cleanup Dashboard. Instead of attempting to modify the filesystem directly, GhostBusters generates highly-contextual, surgical prompts. When the developer clicks "Auto-Fix via Bob", the exact coordinates of the technical debt are copied to the clipboard. The developer pastes this into the IBM Bob IDE, allowing Bob's agentic AI to safely execute the multi-file refactoring and dependency pruning.
+
+By pairing lightning-fast static analysis with IBM Bob's advanced agentic capabilities, GhostBusters ensures that enterprise codebases remain lean, secure, and free of AI-generated bloat.

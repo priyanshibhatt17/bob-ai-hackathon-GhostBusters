@@ -1,33 +1,58 @@
 # Architecture
 
-## System Components & Data Flow
+GhostBusters operates on a hybrid architecture, splitting the responsibilities between a lightning-fast local static analysis engine and a cloud-powered AI execution agent (IBM Bob).
+
+## Data Flow Diagram
+
+The following Mermaid diagram illustrates how user input flows from the web dashboard, through our local AST scanning engine, and finally into the IBM Bob Agent for safe code liquidation.
 
 ```mermaid
 graph TD
-    A[Developer] -->|Enters Repo Path| B[React Web Dashboard]
-    B -->|Displays Tech Debt| A
-    B -.->|Triggers| C[Node.js Local Scanner]
-    C -->|Parses Code| D[(TypeScript Compiler API)]
-    D -->|Finds Ghost Dependencies| C
+    %% User Inputs
+    User((Developer)) -->|Enters Target Path| Frontend
     
-    A -->|Chat Prompt: 'Clean this up'| E[IBM Bob CLI / IDE]
-    E -->|MCP Call| F[GhostBusters MCP Server]
-    F -->|Fetches Suspect Code| C
-    F -->|Sends Targeted Snippets| G[watsonx.ai / IBM Bob]
-    G -->|Returns Safe Refactor Diff| E
+    %% Frontend Components
+    subgraph "GhostBusters Dashboard (React/Vite)"
+        Frontend[Web UI]
+        Dashboard[Codebase Health Dashboard]
+        UX[Investigation Cards / Blast Radius Graph]
+        Frontend --> Dashboard
+        Frontend --> UX
+    end
+
+    %% Backend Engine
+    subgraph "GhostBusters Engine (Node.js)"
+        API[Express API]
+        AST[TypeScript Compiler AST Parser]
+        DuplicateHash[Duplicate Logic Hasher]
+        Confidence[Confidence & Risk Engine]
+        
+        API --> AST
+        API --> DuplicateHash
+        AST --> Confidence
+        DuplicateHash --> Confidence
+    end
+    
+    %% Connections
+    Frontend -->|POST /api/scan| API
+    Confidence -->|JSON Payload| Dashboard
+    
+    %% Orchestration
+    Dashboard -->|Copies Contextual Prompt| Clipboard[System Clipboard]
+    Clipboard -->|Paste| IBMBob[IBM Bob IDE Extension]
+    
+    %% AI Execution
+    subgraph "Execution Layer"
+        IBMBob --> AgentMode[IBM Bob Agent Mode]
+        IBMBob --> SubagentJury[IBM Bob Subagent Jury]
+        
+        AgentMode -->|npm uninstall / rm| Filesystem[(Local Filesystem)]
+        SubagentJury -->|Human Review & Approval| Filesystem
+    end
 ```
 
-## Component Table
+## System Components
 
-| Technology | Responsibility |
-|---|---|
-| **React / Vite (Frontend)** | Provides a beautiful, minimalistic dashboard for developers to visualize their repository's technical debt. |
-| **Node.js (Backend)** | Serves as the core engine. Houses the TypeScript Compiler API logic to statically analyze code without incurring AI token costs. |
-| **Model Context Protocol (MCP)** | Acts as the standard interface bridging our local Ghost Scanner with IBM Bob. |
-| **IBM Bob (Agent)** | The intelligent execution engine. Reviews the isolated snippets found by the scanner and executes the safe multi-file refactoring. |
-
-## End-to-End Data Flow
-1. **Local Parsing:** The Node.js scanner reads the raw `.ts`/`.js` files from the target repository and builds an Abstract Syntax Tree (AST).
-2. **Identification:** It isolates code blocks flagged with diagnostic `TS6133` ("declared but never used").
-3. **Visualization:** This raw data is sent to the React frontend to be displayed to the user.
-4. **Remediation:** Through the MCP Server, IBM Bob receives *only* the flagged code blocks, minimizing token usage, and generates the final deletion diffs.
+1. **GhostBusters Dashboard (Frontend):** A React/Vite application utilizing glassmorphism CSS. It visually renders the technical debt in an accessible format and generates the highly-contextual AI prompts required for IBM Bob.
+2. **GhostBusters Engine (Backend):** A Node.js/Express server that acts as the "MRI Machine." It uses the TypeScript Compiler API to physically read and map the Abstract Syntax Tree of the target repository, calculating mathematical Confidence Scores for each piece of debt.
+3. **Execution Layer (IBM Bob):** Our system delegates all actual file modifications and package uninstalls to IBM Bob. This ensures that the codebase is protected by Bob's safe rollback and intelligent testing capabilities.
