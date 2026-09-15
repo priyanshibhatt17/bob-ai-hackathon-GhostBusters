@@ -1,21 +1,16 @@
 # Problem Statement
 
-## Background
+## The Audience Affected
+Modern enterprise software teams, Site Reliability Engineers (SREs), and DevOps engineers.
 
-[Describe the broader context. What domain or industry does this problem belong to? What situation creates the problem?]
+## Why Existing Solutions Don't Solve It
+With the rapid adoption of AI coding assistants, developers are generating code faster than ever. However, AI often generates multiple iterations of a solution, leaving behind "Ghost Dependencies"—unused package imports, orphaned helper functions, and dead logic. Standard linters (like ESLint) only check basic syntax on a per-file basis. They do not understand the structural, semantic context of an entire repository to safely identify and remove this complex code bloat.
 
-## The Problem
+## Quantified Pain
+When ghost dependencies accumulate:
+- **Build times** increase unnecessarily due to unused packages being bundled.
+- **Cloud computing costs** rise.
+- **Developer cognitive load** skyrockets, as engineers spend hours reading and deciphering "dead code" during high-stress incident responses, assuming it does something important.
 
-[State the problem clearly and specifically. Avoid vague statements like "things are slow" — instead say "Operations teams spend an average of 45 minutes per incident diagnosing pipeline failures because logs are scattered across 6 different tools."]
-
-## Who is Affected
-
-[Describe the specific user or persona experiencing this problem. Be concrete — not "developers" but "backend engineers managing CI/CD pipelines in enterprises with 50+ microservices."]
-
-## Why It Matters
-
-[What is the cost of this problem? Lost time? Revenue? Safety risk? Frustration? Quantify if possible.]
-
-## Why Existing Solutions Fall Short
-
-[Briefly explain what people currently do and why it doesn't fully solve the problem. This sets up why your solution is needed.]
+## Why This Problem Matters Now
+As AI continues to write a larger percentage of our global software, AI-induced code bloat is becoming a massive source of silent technical debt. We need an intelligent, context-aware "janitor" to keep our repositories clean and maintainable.

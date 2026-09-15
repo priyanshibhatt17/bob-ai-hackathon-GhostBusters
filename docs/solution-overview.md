@@ -1,41 +1,19 @@
 # Solution Overview
 
-## What We Built
+## The Core Mechanism
+**GhostBusters** is a hybrid solution comprising two main components:
+1. **The Ghost Scanner (Local Backend):** A Node.js backend that utilizes the TypeScript Compiler API to perform zero-cost AST (Abstract Syntax Tree) parsing across an entire repository. It statically identifies variables, functions, and imports that are declared but never used.
+2. **The MCP Server & IBM Bob Integration:** The backend acts as a Model Context Protocol (MCP) server. Instead of feeding thousands of lines of raw code into an LLM (which is expensive and slow), our local scanner finds the "ghosts" first, and then sends a highly optimized, targeted prompt to **IBM Bob** to verify the dead code and propose a safe, multi-file refactor.
 
-[Describe your solution in plain language. Avoid jargon — write as if explaining to a smart colleague unfamiliar with your tech stack.]
-
-## How It Works
-
-[Explain the core mechanism step by step. A numbered list or simple flow works well here.]
-
-1. [Step 1: e.g., "User connects their GitHub repository via OAuth"]
-2. [Step 2: e.g., "The system ingests pipeline logs and feeds them to watsonx.ai"]
-3. [Step 3: e.g., "An anomaly score is computed and displayed on the dashboard"]
-4. [Step 4: e.g., "Alerts are sent to Slack when the score exceeds a threshold"]
-
-## Architecture Diagram
-
-> See [`architecture.md`](architecture.md) for the detailed diagram.
-
-[Optionally include a simple ASCII or Mermaid diagram here for quick reference.]
-
-```
-[User] → [Frontend: React] → [API: FastAPI] → [watsonx.ai] → [Dashboard]
-                                    ↓
-                             [PostgreSQL DB]
-```
+## Differentiation from Naive Alternatives
+Naive alternatives either rely on basic regex (which breaks easily) or they attempt to paste entire codebases into an LLM context window, resulting in massive API costs and hallucinations. GhostBusters uses deterministic static analysis *first*, and AI *second* for validation, making it extremely fast, accurate, and token-efficient.
 
 ## Key Design Decisions
+*   **Token-Efficient Strategy (50 Credit Budget):** We specifically designed the architecture to conserve IBM Bob tokens. By doing the heavy lifting locally via the TS Compiler API, Bob is only invoked for the final, critical "Agent Execution" step.
+*   **Visual Dashboard:** We built a React/Vite frontend with a clean, minimalistic UI to provide engineers with a clear visual representation of their technical debt before they unleash the AI to clean it up.
 
-| Decision | Rationale |
-|---|---|
-| [e.g., Used watsonx.ai for anomaly detection] | [e.g., Pre-trained models reduced time-to-value vs. building from scratch] |
-| [Decision 2] | [Rationale 2] |
-| [Decision 3] | [Rationale 3] |
-
-## IBM Technologies Used
-
-[Explain specifically HOW you used each IBM technology — not just that you used it.]
-
-- **[IBM Tech 1, e.g., watsonx.ai]:** [How it was used — e.g., "Used the `ibm/granite-13b-instruct-v2` model via the Python SDK to classify anomaly types from log text."]
-- **[IBM Tech 2]:** [How it was used]
+## The User Experience
+1. A developer enters the path of their repository into the GhostBusters Web Dashboard.
+2. The dashboard displays a clean list of all Ghost Dependencies and orphaned code blocks.
+3. The developer switches to their IDE, where they ask IBM Bob to run the GhostBusters MCP tool.
+4. Bob automatically generates the PR/diffs to safely liquidate the dead code with a single click.
