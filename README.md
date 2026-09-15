@@ -1,6 +1,4 @@
-# 🚀 [Your Project Title Here]
-
-> ⚠️ **Replace everything in `[ ]` brackets with your actual content before submission.**
+# 🚀 GhostBusters - AI Code Bloat Janitor
 
 ---
 
@@ -8,36 +6,31 @@
 
 | Field | Value |
 |---|---|
-| **Team Name** | [Your Team Name] |
-| **Track** | [AI / DevOps / Sustainability / Open] |
-| **Team Lead** | [Name] — [email@ibm.com] |
-| **Members** | [Name 1], [Name 2], [Name 3] |
+| **Team Name** | GhostBusters |
+| **Track** | DevOps |
+| **Team Lead** | Priyanshi Bhatt — priyanshibhatt1711@gmail.com |
+| **Members** | Vidhi Sutariya, Janki Panchal, Yatri Joshi |
 
 ---
 
 ## 🎯 Problem Statement
 
-> In 2–3 sentences: What problem does your project solve? Who experiences this problem?
-
-[Describe the real-world problem your project addresses. Be specific about who the user is and what pain point they face.]
+As teams use AI assistants to generate code quickly, codebases accumulate subtle technical debt like orphaned helper functions and ghost dependencies. Standard linters miss this semantic bloat, causing enterprise teams to deploy unnecessarily heavy, confusing applications.
 
 ---
 
 ## 💡 Solution
 
-> In 2–3 sentences: What did you build? How does it solve the problem above?
-
-[Describe your solution clearly. Explain the core mechanism — what makes it work.]
+GhostBusters is a hybrid application featuring a web dashboard and an MCP server that intelligently scans code for ghost dependencies. It uses a token-efficient strategy with IBM Bob to verify dead code and propose automated cleanups.
 
 ---
 
 ## ✨ Key Features
 
-- **Feature 1:** [Brief description — e.g., "Real-time anomaly detection using watsonx.ai"]
-- **Feature 2:** [Brief description]
-- **Feature 3:** [Brief description]
-- **Feature 4:** [Optional]
-- **Feature 5:** [Optional]
+- **Feature 1:** Token-efficient, zero-shot local code scanning for ghost dependencies
+- **Feature 2:** Model Context Protocol (MCP) server integration with IBM Bob
+- **Feature 3:** Automated execution of multi-file dead code removal
+- **Feature 4:** Beautiful visual web dashboard for tracking repository tech debt
 
 ---
 
@@ -45,11 +38,11 @@
 
 | Category | Technologies |
 |---|---|
-| **Languages** | [e.g., Python, TypeScript] |
-| **Frameworks** | [e.g., FastAPI, React] |
-| **IBM Technologies** | [e.g., watsonx.ai, IBM Bob, IBM Cloud] |
-| **Databases** | [e.g., PostgreSQL, Redis] |
-| **Other** | [e.g., Docker, GitHub Actions] |
+| **Languages** | TypeScript, JavaScript, CSS |
+| **Frameworks** | React, Vite, Node.js |
+| **IBM Technologies** | IBM Bob, watsonx.ai |
+| **Databases** | N/A |
+| **Other** | Model Context Protocol (MCP), Esprima |
 
 ---
 
@@ -77,18 +70,17 @@
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/[your-repo].git
-cd [your-repo]
+git clone https://github.com/priyanshibhatt17/bob-ai-hackathon-GhostBusters.git
+cd bob-ai-hackathon-GhostBusters
 
 # 2. Install dependencies
-[your install command here]
+npm install
 
 # 3. Configure environment
 cp .env.example .env
-# Edit .env with your values
 
 # 4. Run the project
-[your run command here]
+npm run dev
 ```
 
 ---
@@ -106,16 +98,13 @@ cp .env.example .env
 
 ## ⚠️ Known Limitations
 
-> Be honest — judges appreciate transparency over overclaiming.
-
-- [Limitation 1: e.g., "Authentication is mocked — not production-ready"]
-- [Limitation 2: e.g., "Only tested on Chrome"]
-- [Limitation 3: e.g., "Feature X is scaffolded but not fully implemented"]
+- The static analysis currently focuses heavily on JavaScript/TypeScript environments.
+- The MCP server requires a local instance of IBM Bob running in the IDE to accept connections.
 
 ---
 
 ## 🏅 What We're Most Proud Of
 
-[Tell the judges what part of your submission is strongest and worth paying close attention to.]
+We are most proud of our **50-Credit Token Strategy**. Instead of dumping an entire repository into the LLM context (which is expensive and slow), we built a smart local parsing engine that finds potential dead code first. We only send the final, verified snippets to IBM Bob for remediation. This makes IBM Bob load-bearing but highly cost-efficient!
 
 ---
