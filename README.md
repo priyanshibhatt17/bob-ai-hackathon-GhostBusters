@@ -8,7 +8,7 @@
 |---|---|
 | **Team Name** | GhostBusters |
 | **Track** | DevOps |
-| **Team Lead** | Priyanshi Bhatt — d25dce166@charusat.edu.in, priyanshibhatt1711@gmail.com |
+| **Team Lead** | Priyanshi Bhatt — priyanshibhatt1711@gmail.com |
 | **Members** | Vidhi Sutariya, Janki Panchal, Yatri Joshi |
 
 ---

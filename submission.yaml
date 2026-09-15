@@ -13,7 +13,7 @@ team:
   track: "DevOps"                      # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
     name: "Priyanshi Bhatt"            # REQUIRED — e.g., "Alice Chen"
-    email: "d25dce166@charusat.edu.in, priyanshibhatt1711@gmail.com"   # REQUIRED — e.g., "alice.chen@ibm.com"
+    email: "priyanshibhatt1711@gmail.com"   # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
     - name: "Vidhi Sutariya"               # REQUIRED — Team member 1
       email: "24dce143@charusat.edu.in"
