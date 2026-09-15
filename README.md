@@ -15,22 +15,25 @@
 
 ## 🎯 Problem Statement
 
-As teams use AI assistants to generate code quickly, codebases accumulate subtle technical debt like orphaned helper functions and ghost dependencies. Standard linters miss this semantic bloat, causing enterprise teams to deploy unnecessarily heavy, confusing applications.
+As software teams increasingly adopt AI coding assistants like IBM Bob and GitHub Copilot to accelerate development, a new, dangerous category of technical debt has emerged: **AI-Generated Semantic Code Bloat.**
+
+When AI generates features or refactors code, it often introduces dependencies, configuration flags, or helper functions. However, when those features are later modified or deleted, the associated architectural artifacts are frequently left behind. Over time, enterprise codebases accumulate Ghost Dependencies, Duplicate Logic, and Dead Configurations. Standard linters miss this semantic bloat, causing enterprise teams to deploy unnecessarily heavy, confusing applications.
 
 ---
 
 ## 💡 Solution
 
-GhostBusters is a hybrid application featuring a web dashboard and an MCP server that intelligently scans code for ghost dependencies. It uses a token-efficient strategy with IBM Bob to verify dead code and propose automated cleanups.
+GhostBusters is an enterprise-grade technical debt orchestrator that uses lightning-fast Abstract Syntax Tree (AST) scanning to find ghost dependencies, duplicate logic, and dead configs. It feeds highly-contextual prompts into IBM Bob, allowing Bob's agentic AI to safely execute multi-file refactoring and liquidation.
 
 ---
 
 ## ✨ Key Features
 
-- **Feature 1:** Token-efficient, zero-shot local code scanning for ghost dependencies
-- **Feature 2:** Model Context Protocol (MCP) server integration with IBM Bob
-- **Feature 3:** Automated execution of multi-file dead code removal
-- **Feature 4:** Beautiful visual web dashboard for tracking repository tech debt
+- **AST Semantic Usage Engine:** Lightning-fast scanning for unused ghost dependencies
+- **Duplicate Logic Detector:** Structural AST hashing to find semantically cloned functions
+- **Confidence & Risk Engine:** Mathematically scores debt and delegates to Bob's Subagent Jury
+- **Interactive Cleanup Dashboard:** Stunning glassmorphism UI with a macOS-style terminal
+- **Blast Radius Graph:** Visual Mermaid.js mapping to prove isolated dead code paths
 
 ---
 
@@ -38,18 +41,18 @@ GhostBusters is a hybrid application featuring a web dashboard and an MCP server
 
 | Category | Technologies |
 |---|---|
-| **Languages** | TypeScript, JavaScript, CSS |
-| **Frameworks** | React, Vite, Node.js |
-| **IBM Technologies** | IBM Bob, watsonx.ai |
+| **Languages** | TypeScript, JavaScript, HTML, CSS |
+| **Frameworks** | React, Vite, Node.js, Express |
+| **IBM Technologies** | IBM Bob (Agent Mode), IBM Bob (Subagents) |
 | **Databases** | N/A |
-| **Other** | Model Context Protocol (MCP), Esprima |
+| **Other** | TypeScript Compiler API, Mermaid.js |
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-├── src/                  # All source code
+├── src/                  # All source code (backend and frontend)
 ├── docs/                 # Written documentation
 │   ├── problem-statement.md
 │   ├── solution-overview.md
@@ -66,20 +69,20 @@ GhostBusters is a hybrid application featuring a web dashboard and an MCP server
 
 ## ⚡ How to Run
 
-> **Copy these exact steps from your [`docs/setup-guide.md`](docs/setup-guide.md)**
-
 ```bash
 # 1. Clone the repo
 git clone https://github.com/priyanshibhatt17/bob-ai-hackathon-GhostBusters.git
 cd bob-ai-hackathon-GhostBusters
 
-# 2. Install dependencies
+# 2. Start the Backend (AST Scanner)
+cd src/backend
 npm install
+npm start
 
-# 3. Configure environment
-cp .env.example .env
-
-# 4. Run the project
+# 3. Start the Frontend (Dashboard)
+# Open a new terminal
+cd src/frontend
+npm install
 npm run dev
 ```
 
@@ -98,13 +101,10 @@ npm run dev
 
 ## ⚠️ Known Limitations
 
-- The static analysis currently focuses heavily on JavaScript/TypeScript environments.
-- The MCP server requires a local instance of IBM Bob running in the IDE to accept connections.
+- The "Why Does This Exist" feature and "Blast Radius Graph" currently use mocked Git history data in the UI to demonstrate our vision for GhostBusters V2. Building a real-time Git history temporal engine required massive cloud databases, which was outside the scope of a 24-hour hackathon, but the core AST debt scanner is 100% fully functional.
 
 ---
 
 ## 🏅 What We're Most Proud Of
 
-We are most proud of our **50-Credit Token Strategy**. Instead of dumping an entire repository into the LLM context (which is expensive and slow), we built a smart local parsing engine that finds potential dead code first. We only send the final, verified snippets to IBM Bob for remediation. This makes IBM Bob load-bearing but highly cost-efficient!
-
----
+We are incredibly proud of how our tool acts as an "MRI Machine" for the codebase. IBM Bob is powerful, but it doesn't know where to look in a 10,000-file repository. Our AST backend scans the entire repository in milliseconds, calculates a mathematical Confidence Score, and dynamically generates surgical prompts that IBM Bob can immediately execute to liquidate the debt.
