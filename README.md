@@ -92,6 +92,7 @@ npm run dev
 
 | Artifact | Link |
 |---|---|
+| 📁 **Google Drive (All Assets)** | [**Access Presentation, Video, and Screenshots**](https://drive.google.com/drive/folders/1pBNaEYBnuww2Ij8ncWwGZUiMIskc855S?usp=sharing) |
 | 📹 Demo Video | [See demo/demo-video-link.txt](demo/demo-video-link.txt) |
 | 🌐 Live Demo | [See demo/live-demo-url.txt](demo/live-demo-url.txt) |
 | 🖼️ Screenshots | [See demo/screenshots/](demo/screenshots/) |
